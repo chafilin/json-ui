@@ -1,26 +1,17 @@
+import { useComponent } from "../hooks/useComponent";
+import { useStyles } from "../hooks/useStyles";
+
 type TextProps = {
   keyId: string;
-  value: string;
-  styles: {
-    [key: string]: string | number;
-  };
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-  onFocus: () => void;
-  onBlur: () => void;
 };
 
 export const Text = (props: TextProps) => {
+  const component = useComponent(props.keyId);
+  const [ref, style] = useStyles<HTMLParagraphElement>(component.style);
+
   return (
-    <p
-      style={props.styles}
-      key={props.keyId}
-      onMouseEnter={props.onMouseEnter}
-      onMouseLeave={props.onMouseLeave}
-      onFocus={props.onFocus}
-      onBlur={props.onBlur}
-    >
-      {props.value}
+    <p style={style} key={props.keyId} ref={ref}>
+      {component.data?.value || ""}
     </p>
   );
 };

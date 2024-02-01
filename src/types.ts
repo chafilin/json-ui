@@ -1,91 +1,74 @@
-export type Styles = {
-  webStyle: {
-    [key: string]: string | number | undefined;
-  };
-  actions: {
-    onFocus: {
-      color?: string;
-      backgroundColor?: string;
-    };
-    onHover: {
-      color?: string;
-      backgroundColor?: string;
-    };
-  };
-};
+export interface Root {
+  views: Children[];
+}
 
-type DropdownOption = {
+export interface Style {
+  webStyle: WebStyle;
+  actions: Actions;
+}
+
+export interface WebStyle {
+  [key: string]: string | number | undefined;
+}
+
+export interface Actions {
+  onFocus: OnFocus;
+  onHover: OnHover;
+}
+
+export interface OnFocus {
+  color?: string;
+  backgroundColor?: string;
+}
+
+export interface OnHover {
+  color?: string;
+  backgroundColor?: string;
+}
+
+export interface Children {
+  type: string;
+  value?: string;
+  style: Style;
+  data?: Data;
+  children?: Children[];
+}
+
+export interface Data {
+  placeholder?: string;
+  value?: string;
+  options?: DropdownValue[];
+  title?: string;
+}
+
+export interface Option {
   label: string;
   value: string;
-};
-
-export type DropdownValue = {
+}
+export interface DropdownValue {
   group: string;
-  options: DropdownOption[];
+  options: Option[];
+}
+
+export type TransformedTree = {
+  tree: TransformedView[];
+  components: Components;
 };
 
-export type DropdownComponent = {
-  type: "dropdown";
-  data: {
-    value: DropdownValue[];
-  };
-  style: Styles;
-};
-export type TextComponent = {
-  type: "text";
-  data: {
-    value: string;
-  };
-  style: Styles;
+export type TransformedView = {
+  id: string;
+  type: string;
+  children: TransformedView[];
 };
 
-export type TextFieldComponent = {
-  type: "textfield";
-  data: {
-    placeholder: string | null;
-    value: string | null;
-  };
-  style: Styles;
+export type Components = {
+  [key: string]: Component;
 };
 
-export type TextAreaComponent = {
-  type: "textarea";
-  data: {
-    placeholder: string;
-    value: string | null;
-  };
-  style: Styles;
-};
-
-export type ButtonComponent = {
-  type: "button";
-  data: {
-    title: string;
-  };
-  style: Styles;
-};
-
-export type ImageComponent = {
-  type: "image";
-  value: string;
-  style: Styles;
-};
-
-export type ContainerComponent = {
-  type: "container";
-  style: Styles;
-  children: Component[];
-};
-
-export type Component =
-  | DropdownComponent
-  | TextComponent
-  | TextFieldComponent
-  | TextAreaComponent
-  | ButtonComponent
-  | ImageComponent
-  | ContainerComponent;
-
-export type Data = {
-  views: Component[];
+export type Component = {
+  type: string;
+  value?: string;
+  data?: Data;
+  style: Style;
+  children?: string[];
 };

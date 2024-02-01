@@ -1,16 +1,22 @@
-import { DropdownValue } from "../types";
+import { useComponent } from "../hooks/useComponent";
+import { useStyles } from "../hooks/useStyles";
 
 type DropdownProps = {
-  values: DropdownValue[];
   keyId: string;
-  styles: {
-    [key: string]: string | number;
-  };
 };
 
-export const Dropdown = ({ values, keyId, styles }: DropdownProps) => {
+export const Dropdown = ({ keyId }: DropdownProps) => {
+  const component = useComponent(keyId);
+  const [ref, style] = useStyles<HTMLSelectElement>(component.style);
+
+  const values = component.data?.options;
+
+  if (!values) {
+    return null;
+  }
+
   return (
-    <select id={keyId} style={styles}>
+    <select id={keyId} style={style} ref={ref}>
       {values.map((value, index) => (
         <DropdownGroup
           key={keyId + "_" + index}

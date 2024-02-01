@@ -1,27 +1,21 @@
+import { useComponent } from "../hooks/useComponent";
+import { useStyles } from "../hooks/useStyles";
+
 type TextareaProps = {
   keyId: string;
-  placeholder: string;
-  value: string;
-  styles: {
-    [key: string]: string | number;
-  };
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-  onFocus: () => void;
-  onBlur: () => void;
 };
 
 export const Textarea = (props: TextareaProps) => {
+  const component = useComponent(props.keyId);
+  const [ref, style] = useStyles<HTMLTextAreaElement>(component.style);
+
   return (
     <textarea
-      style={props.styles}
-      placeholder={props.placeholder}
-      defaultValue={props.value}
+      style={style}
+      placeholder={component.data?.placeholder}
+      defaultValue={component.data?.value}
       key={props.keyId}
-      onMouseEnter={props.onMouseEnter}
-      onMouseLeave={props.onMouseLeave}
-      onFocus={props.onFocus}
-      onBlur={props.onBlur}
+      ref={ref}
     />
   );
 };

@@ -1,23 +1,14 @@
-import { Data } from "../types";
-import { ComponentView } from "./ComponentVeiw";
+import { useContext } from "react";
 
-type ViewBuilderProps = {
-  data: Data;
-};
+import { TreeContext } from "../Context";
+import { ComponentView } from "./ComponentView";
 
-export const ViewBuilder = (props: ViewBuilderProps) => {
-  const { data } = props;
-  const { views } = data;
+export const ViewBuilder = () => {
+  const tree = useContext(TreeContext);
   return (
     <>
-      {views.map((component, index) => {
-        return (
-          <ComponentView
-            component={component}
-            key={"root_" + index}
-            keyId={"root_" + index}
-          />
-        );
+      {tree?.map((child) => {
+        return <ComponentView key={child.id} tree={child} />;
       })}
     </>
   );

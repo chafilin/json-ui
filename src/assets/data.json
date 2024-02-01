@@ -289,7 +289,7 @@
                 {
                   "type": "dropdown",
                   "data": {
-                    "value": [
+                    "options": [
                       {
                         "group": "Group 1",
                         "options": [

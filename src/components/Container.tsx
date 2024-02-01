@@ -1,25 +1,17 @@
+import { useComponent } from "../hooks/useComponent";
+import { useStyles } from "../hooks/useStyles";
+
 type ContainerProps = {
   keyId: string;
-  styles: {
-    [key: string]: string | number;
-  };
   children?: React.ReactNode;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-  onFocus: () => void;
-  onBlur: () => void;
 };
 
 export const Container = (props: ContainerProps) => {
+  const component = useComponent(props.keyId);
+  const [ref, style] = useStyles<HTMLDivElement>(component.style);
+
   return (
-    <div
-      style={props.styles}
-      key={props.keyId}
-      onMouseEnter={props.onMouseEnter}
-      onMouseLeave={props.onMouseLeave}
-      onFocus={props.onFocus}
-      onBlur={props.onBlur}
-    >
+    <div style={style} key={props.keyId} ref={ref}>
       {props.children}
     </div>
   );

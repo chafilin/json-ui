@@ -1,25 +1,18 @@
+import { useComponent } from "../hooks/useComponent";
+import { useStyles } from "../hooks/useStyles";
+
 type ButtonProps = {
   keyId: string;
-  title: string;
-  styles: {
-    [key: string]: string | number;
-  };
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-  onFocus: () => void;
-  onBlur: () => void;
 };
 
 export const Button = (props: ButtonProps) => {
+  const component = useComponent(props.keyId);
+
+  const [ref, style] = useStyles<HTMLButtonElement>(component.style);
+
   return (
-    <button
-      style={props.styles}
-      onMouseEnter={props.onMouseEnter}
-      onMouseLeave={props.onMouseLeave}
-      onFocus={props.onFocus}
-      onBlur={props.onBlur}
-    >
-      {props.title}
+    <button style={style} ref={ref}>
+      {component.data?.title}
     </button>
   );
 };
